@@ -8,7 +8,14 @@ Reflect.setPrototypeOf(course, {
     }
 });
 
-// Reflect.deleteProperty(course,'title');
-// Object.deleteProperty(course, 'title');
-// delete course.title;
-console.log(course.toString());
+const courseHandler = {
+    get(obj, propName) {
+        if(propName === 'length') {
+            return 0;
+        }
+        return obj[propName] || 'Not Found';
+    }
+}
+
+const pCourse = new Proxy(course, courseHandler);
+console.log(pCourse.title, pCourse.length);
